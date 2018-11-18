@@ -291,55 +291,8 @@ class DecisionTree(object):
         """
         #return self.root.predict(sample)
         return self.classify(sample, self.my_tree)
-    
 
 
-def load_data(file_path):
-    """
-    Load data from given file path, please see data description for details
-    of the data format
-    """
-    records = []
-    file = open(file_path)
-    count = 0
-    for line in file:
-        tokens = line.strip().split(',')
-        records.append({"label":tokens[0:9], "attributes":tokens[9]})
-    attributes = range(len(records[0]["attributes"]))
-    file.close()
-    #print(records['label'])
-    print(type(records))
-    return records, attributes
-
-def test_model(model, training_file_path, testing_file_path):
-    """
-    Test the accuracy of given model
-    """
-    records, attributes = load_data(training_file_path)
-    model.train(records, attributes)
-    test_records = load_data(testing_file_path)[0]
-    correct_cnt = 0
-    for sample in test_records:
-        if model.predict(sample) == sample["attributes"]:
-            correct_cnt += 1
-    print ("Accuracy:",float(correct_cnt) / len(test_records))
-
-def main():
-    """
-    Process the input arguments
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', default="0")
-    parser.add_argument('-t', '--training', default="data/tic_tac_toe_train.data")
-    parser.add_argument('-e', '--testing', default="data/tic_tac_toe_test.data")
-    parser.add_argument('-n', '--tree_nums', default=20)
-    args = parser.parse_args()
-
-    if args.model == "0":
-        print ("Testing Decision Tree model")
-        model = DecisionTree()
-    test_model(model, args.training, args.testing)
-
-if __name__ == "__main__":
-  main()
+# if __name__ == "__main__":
+#   main().unittest
 
