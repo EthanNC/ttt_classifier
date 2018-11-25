@@ -2,13 +2,6 @@ from collections import Counter
 import unittest
 import math
 
-import argparse
-import numpy
-
-topHeader  = ["top-left-square", "top-middle-square", "top-right-square"]
-middleHeader = ["middle-left-square", "middle-middle-square", "middle-right-square"]
-bottomHeader = ["bottom-left-square", "bottom-middle-square", "bottom-right-square"]
-
 def class_counts(rows):
         counts = {}  # a dictionary of label -> count.
         for row in rows:
@@ -101,28 +94,18 @@ class DecisionTree(object):
         This function should return a label that is assigned to the node
         """
 
-        # Count the labels and return the majority label
-        #if(is leave)
+        #if leaf return class assgined
         if isinstance(node, Leaf):
             for key in node.predictions.keys():
                 return key
+        #compare the attributes to the questions down the tree
         if node.question.match(row["label"]):
             return self.classify(row, node.true_branch)
         else:
             return self.classify(row, node.false_branch)
 
-
-
-    def entropy(self, records):
-        """
-        This function calculates the entropy of given set of records
-        """
     def gini(self, records):
-        """Calculate the Gini Impurity for a list of rows.
-        There are a few different ways to do this, I thought this one was
-        the most concise. See:
-        https://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity
-        """
+        """Replaced this method with entropy. Just think of entropy as impurity"""
         counts = class_counts(records)
         impurity = 1
         for lbl in counts:
@@ -139,19 +122,6 @@ class DecisionTree(object):
         return current_uncertainty - p * self.gini(left) - (1 - p) * self.gini(right)
 
     def find_best_split(self, records, attributes):
-        """
-        The find_best_split() function determines which attribute should be
-        selected as the test condition for splitting the training records.
-        The test condition should be measured by Gain Ratio.
-
-        This function should return multiple information:
-        attributed selected for splitting,
-        threshold value for splitting,
-        best_gain_ratio,
-        left subset,
-        right subset
-        """
-
         # Your code here
         # Hint-1: loop through all available attributes
         # Hint-2: for each attribute, loop through all possible values
