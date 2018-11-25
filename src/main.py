@@ -48,8 +48,7 @@ def main():
     else:
         print ("Testing Random Forest model")
         model = RandomForest(args.tree_nums)
-
-        
+  
     test_model(model, args.training, args.testing)
 
 if __name__ == "__main__":
